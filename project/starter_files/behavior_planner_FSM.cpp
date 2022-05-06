@@ -13,8 +13,8 @@
 State BehaviorPlannerFSM::get_closest_waypoint_goal(
     const State& ego_state, const SharedPtr<cc::Map>& map,
     const float& lookahead_distance, bool& is_goal_junction) {
-  // Nearest waypoint on the center of a Driving Lane.
-  auto waypoint_0 = map->GetWaypoint(ego_state.location);
+    // Nearest waypoint on the center of a Driving Lane.
+  	auto waypoint_0 = map->GetWaypoint(ego_state.location);
 
   if (_active_maneuver == DECEL_TO_STOP || _active_maneuver == STOPPED) {
     State waypoint;

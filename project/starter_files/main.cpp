@@ -81,7 +81,11 @@ MotionPlanner motion_planner(P_NUM_PATHS, P_GOAL_OFFSET, P_ERR_TOLERANCE);
 bool have_obst = false;
 vector<State> obstacles;
 
-void path_planner(vector<double>& x_points, vector<double>& y_points, vector<double>& v_points, double yaw, double velocity, State goal, bool is_junction, string tl_state, vector< vector<double> >& spirals_x, vector< vector<double> >& spirals_y, vector< vector<double> >& spirals_v, vector<int>& best_spirals){
+void path_planner(vector<double>& x_points, vector<double>& y_points, 
+                  vector<double>& v_points, double yaw, double velocity, 
+                  State goal, bool is_junction, string tl_state, 
+                  vector< vector<double> >& spirals_x, vector< vector<double> >& spirals_y, 
+                  vector< vector<double> >& spirals_v, vector<int>& best_spirals){
 
   State ego_state;
 
@@ -89,12 +93,17 @@ void path_planner(vector<double>& x_points, vector<double>& y_points, vector<dou
   ego_state.location.y = y_points[y_points.size()-1];
   ego_state.velocity.x = velocity;
   
-  if( x_points.size() > 1 ){
-  	ego_state.rotation.yaw = angle_between_points(x_points[x_points.size()-2], y_points[y_points.size()-2], x_points[x_points.size()-1], y_points[y_points.size()-1]);
+  if( x_points.size() > 1 )
+  {
+  	ego_state.rotation.yaw = angle_between_points(x_points[x_points.size()-2], y_points[y_points.size()-2], 
+                                                  x_points[x_points.size()-1], y_points[y_points.size()-1]);
+    
   	ego_state.velocity.x = v_points[v_points.size()-1];	
-  	if(velocity < 0.01)
-  		ego_state.rotation.yaw = yaw;
   	
+    if(velocity < 0.01)
+    {
+  		ego_state.rotation.yaw = yaw;
+    }
   }
 
   Maneuver behavior = behavior_planner.get_active_maneuver();

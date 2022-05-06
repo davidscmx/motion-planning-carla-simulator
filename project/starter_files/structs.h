@@ -19,7 +19,8 @@ using namespace std;
 
 namespace cg = carla::geom;
 
-enum Maneuver  // A.K.A State
+/// A.K.A State
+enum Maneuver  
 {
   // Follow Lane - Maintain a constant speed = SpeedLimit-buffer in the same
   // lane
