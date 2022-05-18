@@ -32,7 +32,8 @@ using SharedPtr = boost::shared_ptr<T>;
 
 using Waypoint = cc::Waypoint;
 
-class MotionPlanner {
+class MotionPlanner 
+{
  private:
   unsigned short _num_paths;  // number of lateral offset paths to generate.
   float _goal_offset;         // lateral distance between goals.
@@ -59,8 +60,10 @@ class MotionPlanner {
 
   std::vector<State> generate_offset_goals_ego_frame(const State& ego_state,
                                                      const State& goal_state);
+  
   std::vector<State> generate_offset_goals_global_frame(
       const State& goal_state);
+  
   std::vector<State> generate_offset_goals(const State& goal_state);
 
   std::vector<std::vector<PathPoint>> generate_spirals(
@@ -75,8 +78,10 @@ class MotionPlanner {
                           const State& goal_state);
 
   bool valid_goal(const State& main_goal, const State& offset_goal);
+  
   bool valid_spiral(const std::vector<PathPoint>& spiral,
                     const State& offset_goal);
+  
   float calculate_cost(const std::vector<PathPoint>& spiral,
                        const std::vector<State>& obstacles,
                        const State& goal);

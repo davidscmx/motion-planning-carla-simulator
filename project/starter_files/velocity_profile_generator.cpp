@@ -58,26 +58,31 @@ std::vector<TrajectoryPoint> VelocityProfileGenerator::generate_trajectory(
   // LOG(INFO) << "Desired Speed (m/s): " << desired_speed;
 
   // Generate a trapezoidal trajectory to decelerate to stop.
-  if (maneuver == DECEL_TO_STOP) {
+  if (maneuver == DECEL_TO_STOP) 
+  {
     // LOG(INFO) << "Generating velocity trajectory for DECEL_TO_STOP";
     trajectory = decelerate_trajectory(spiral, start_speed);
   }
+  
   // If we need to follow the lead vehicle, make sure we decelerate to its speed
   // by the time we reach the time gap point.
-  else if (maneuver == FOLLOW_VEHICLE) {
+  else if (maneuver == FOLLOW_VEHICLE) 
+  {
     // LOG(INFO) << "Generating velocity trajectory for FOLLOW_VEHICLE";
     trajectory =
         follow_trajectory(spiral, start_speed, desired_speed, lead_car_state);
   }
 
   // Otherwise, compute the trajectory to reach our desired speed.
-  else {
+  else 
+  {
     // LOG(INFO) << "Generating velocity trajectory for NOMINAL TRAVEL";
     trajectory = nominal_trajectory(spiral, start_speed, desired_speed);
   }
   // Interpolate between the zeroth state and the first state.
   // This prevents the controller from getting stuck at the zeroth state.
-  if (trajectory.size() > 1) {
+  if (trajectory.size() > 1) 
+  {
     TrajectoryPoint interpolated_state;
     interpolated_state.path_point.x =
         (trajectory[1].path_point.x - trajectory[0].path_point.x) * 0.1 +
@@ -115,7 +120,8 @@ std::vector<TrajectoryPoint> VelocityProfileGenerator::decelerate_trajectory(
   perform a smooth deceleration and require a harder deceleration.  Build the path
   up in reverse to ensure we reach zero speed at the required time.
   */
-  if (brake_distance + decel_distance > path_length) {
+  if (brake_distance + decel_distance > path_length) 
+  {
     std::vector<double> speeds;
     auto vf{0.0};
     // Let's add the last point, i.e at the stopping line we should have speed
@@ -354,16 +360,15 @@ double VelocityProfileGenerator::calc_distance(const double& v_i,
                                                const double& v_f,
                                                const double& a) const {
   double d{0.0};
-  if (std::abs(a) < DBL_EPSILON) {
+  if (std::abs(a) < DBL_EPSILON) 
+  {
     d = std::numeric_limits<double>::infinity();
-  } else {
-    // TODO-calc distance: use one of the common rectilinear accelerated
-    // equations of motion to calculate the distance traveled while going from
-    // v_i (initial velocity) to v_f (final velocity) at a constant
-    // acceleration/deceleration "a". HINT look at the description of this
-    // function. Make sure you handle div by 0
-    d = 0;  // <- Update
+  } 
+  else   
+  {    
+    d = (v_f*v_f - v_i*v_i) / (2 * a);  
   }
+  
   return d;
 }
 
@@ -380,18 +385,19 @@ double VelocityProfileGenerator::calc_final_speed(const double& v_i,
                                                   const double& a,
                                                   const double& d) const {
   double v_f{0.0};
-  // TODO-calc final speed: Calculate the final distance. HINT: look at the
-  // description of this function. Make sure you handle negative discriminant
-  // and make v_f = 0 in that case. If the discriminant is inf or nan return
-  // infinity
 
-  double disc = 0;  // <- Fix this
-  if (disc <= 0.0) {
+  double disc = (v_i * v_i) + (2 * a * d);  
+  if (disc <= 0.0) 
+  {
     v_f = 0.0;
-  } else if (disc == std::numeric_limits<double>::infinity() ||
-             std::isnan(disc)) {
+  } 
+  else if (disc == std::numeric_limits<double>::infinity() ||
+             std::isnan(disc)) 
+  {
     v_f = std::numeric_limits<double>::infinity();
-  } else {
+  } 
+  else 
+  {
     v_f = std::sqrt(disc);
   }
   //   std::cout << "v_i, a, d: " << v_i << ", " << a << ", " << d

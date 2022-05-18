@@ -77,9 +77,9 @@ class BehaviorPlannerFSM {
   double get_look_ahead_distance(const State& ego_state);
 
   State get_closest_waypoint_goal(const State& ego_state,
-                                                const SharedPtr<cc::Map>& map,
-                                                const float& lookahead_distance,
-                                                bool& is_goal_junction);
+                                  const SharedPtr<cc::Map>& map,
+                                  const float& lookahead_distance,
+                                  bool& is_goal_junction);
 
   State get_goal(const State& ego_state, SharedPtr<cc::Map> map);
 
@@ -88,5 +88,8 @@ class BehaviorPlannerFSM {
                          bool& is_goal_in_junction,
                          string tl_state);
 
-  Maneuver get_active_maneuver() { return _active_maneuver; };
+  Maneuver get_active_maneuver() 
+  { 
+    return _active_maneuver; 
+  };
 };
