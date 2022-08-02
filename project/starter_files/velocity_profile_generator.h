@@ -13,7 +13,6 @@
 #include <vector>
 
 #include <carla/client/Client.h>
-#include <glog/logging.h>
 
 #include "structs.h"
 #include "utils.h"
@@ -33,10 +32,8 @@ class VelocityProfileGenerator {
   double _slow_speed;
 
   // std::vector<TrajectoryPoint> _prev_trajectory;
-
  public:
   VelocityProfileGenerator();
-
   ~VelocityProfileGenerator();
 
   void setup(const double& time_gap, const double& a_max,

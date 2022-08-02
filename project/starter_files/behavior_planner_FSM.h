@@ -16,8 +16,6 @@
 #include <carla/client/Client.h>
 #include <carla/client/Map.h>
 #include <carla/geom/Transform.h>
-#include <glog/logging.h>
-#include <gtest/gtest.h>
 
 #include "planning_params.h"
 #include "structs.h"
@@ -88,8 +86,8 @@ class BehaviorPlannerFSM {
                          bool& is_goal_in_junction,
                          string tl_state);
 
-  Maneuver get_active_maneuver() 
-  { 
-    return _active_maneuver; 
+  Maneuver get_active_maneuver()
+  {
+    return _active_maneuver;
   };
 };
